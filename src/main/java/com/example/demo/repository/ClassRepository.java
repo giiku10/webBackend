@@ -1,9 +1,36 @@
 package com.example.demo.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.example.demo.config.FirestoreConfig;
 import com.example.demo.model.Class;
+import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.CollectionReference;
+import com.google.cloud.firestore.QueryDocumentSnapshot;
+import com.google.cloud.firestore.QuerySnapshot;
 
-public interface ClassRepository extends JpaRepository<Class, Long> {
+public class ClassRepository {
+
+	private final FirestoreConfig firestoreConfig;
 	
+	//コンストラクタインジェクション
+	@Autowired
+	public ClassRepository(FirestoreConfig firestoreConfig){
+		this.firestoreConfig = firestoreConfig;
+	}
+	
+	private final CollectionReference classesReference = firestoreConfig.database.collection("Class");
+	
+	public List<Class> findAll(){
+		List<Class> classes = new ArrayList<Class>();
+		ApiFuture<QuerySnapshot> future = classesReference.get();
+		List<QueryDocumentSnapshot> documents = future.get().getDocuments();
+		for (QueryDocumentSnapshot document : documents) {
+			classes.add(document.toObject(Class.class));
+		}
+		return classes;
+	}
 }
