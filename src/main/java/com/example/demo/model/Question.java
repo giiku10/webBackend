@@ -7,17 +7,19 @@ import lombok.Data;
 
 @Data
 public class Question {
+	
+	//repositoryがカスタムオブジェクトとして取得するためのコンストラクタ
+	public Question(){
+	}
+	
 	@Id
-	private Long id;
+	private String id;
 	
 	@NotBlank
 	private String name;
 	
 	@NotBlank
-	private Long parentQuestionId;
-	
-	@NotBlank
-	private Long classId;
+	private String parent;
 	
 	private Long comprehensionLevel;
 }

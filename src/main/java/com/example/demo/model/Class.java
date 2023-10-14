@@ -7,8 +7,13 @@ import lombok.Data;
 
 @Data
 public class Class {
+	
+	//repositoryがカスタムオブジェクトとして取得するためのコンストラクタ
+	public Class() {
+	}
+	
 	@Id
-	private Long id;
+	private String id;
 	
 	@NotBlank
 	private String name;

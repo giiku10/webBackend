@@ -25,19 +25,19 @@ public class QuestionController {
 		this.questionRepository = questionRepository;
 	}
 	
-	@Operation(summary = "授業を全件取得")
+	@Operation(summary = "Classを全件取得")
 	@GetMapping("/classes")
 	public List<Class> getClasses(){
 		return classRepository.findAll();
 	}
 	
-	@Operation(summary = "授業を1件取得")
+	/**@Operation(summary = "授業を1件取得")
 	@GetMapping("/{classId}")
 	public Class getClass(@PathVariable Long classId){
 		return classRepository.findById(classId).get();
 	}
 	
-	/**@Operation(summary = "特定の授業の問題を全件取得")
+	@Operation(summary = "特定の授業の問題を全件取得")
 	@GetMapping("/{classId}/questions")
 	public List<Question> getQuestions(@PathVariable Long classId){
 		return questionRepository.findAllInClass(classId);
@@ -49,10 +49,34 @@ public class QuestionController {
 		return questionRepository.findByIdInClass(classId, questionId).get();
 	}*/
 	
-	@Operation(summary = "特定の授業の大問のみまたは中問のみまたは小問のみを全件取得")
+	/**@Operation(summary = "特定の授業の大問のみまたは中問のみまたは小問のみを全件取得")
 	@GetMapping("/{classId}/{parentQuestionId}/questions")
 	public List<Question> getQuestions(@PathVariable Long classId, @PathVariable Long parentQuestionId){
 		return questionRepository.findAllQuestions(classId, parentQuestionId);
+	}*/
+	
+	@Operation(summary = "特定のClassのPartを全件取得")
+	@GetMapping("/{classId}/Parts")
+	public List<Question> getParts(@PathVariable String classId){
+		return questionRepository.findAllParts(classId);
+	}
+	
+	@Operation(summary = "特定のClassのfileのPartを全件取得")
+	@GetMapping("/{classId}/fileParts")
+	public List<Question> getFileParts(@PathVariable String classId){
+		return questionRepository.findAllFileParts(classId);
+	}
+	
+	@Operation(summary = "特定のClassのfolderのPartを全件取得")
+	@GetMapping("/{classId}/folderParts")
+	public List<Question> getFolderParts(@PathVariable String classId){
+		return questionRepository.findAllFolderParts(classId);
+	}
+	
+	@Operation(summary = "特定のPartのQuestionを全件取得")
+	@GetMapping("/{partId}/folderParts")
+	public List<Question> getQuestionsInPart(@PathVariable String partId){
+		return questionRepository.findAllQuestionsInPart(partId);
 	}
 	
 	/**@Operation(summary = "特定の授業の大問を全件取得")
