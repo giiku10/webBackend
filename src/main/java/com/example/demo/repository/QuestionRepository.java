@@ -58,14 +58,22 @@ public class QuestionRepository {
 		return questions;
 	}
 	
-	public List<Question> findAllQuestionsInPart(String partId) throws InterruptedException, ExecutionException{
+	public List<Question> findAllQuestionsInPart(String partId) {
 		List<Question> questions = new ArrayList<Question>();
 		ApiFuture<QuerySnapshot> future = questionsReference.whereEqualTo("parent", partId).get();
-		List<QueryDocumentSnapshot> documents = future.get().getDocuments();
-		for (QueryDocumentSnapshot document : documents) {
-			questions.add(document.toObject(Question.class));
+		List<QueryDocumentSnapshot> documents;
+		try {
+			documents = future.get().getDocuments();
+			for (QueryDocumentSnapshot document : documents) {
+				questions.add(document.toObject(Question.class));
+			}
+			return questions;
+		} catch (InterruptedException | ExecutionException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+			return questions;
 		}
-		return questions;
+
 	}
 	
 	public Question findQuestionInPart(String questionId) throws InterruptedException, ExecutionException{
