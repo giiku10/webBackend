@@ -21,5 +21,5 @@ public class Question {
 	@NotBlank
 	private String parent;
 	
-	private Long comprehensionLevel;
+	private Long difficulty;
 }

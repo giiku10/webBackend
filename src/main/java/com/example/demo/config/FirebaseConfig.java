@@ -1,5 +1,7 @@
 package com.example.demo.config;
 
+import java.io.IOException;
+
 import org.springframework.stereotype.Component;
 
 import com.google.auth.oauth2.GoogleCredentials;
@@ -13,11 +15,15 @@ import com.google.firebase.database.annotations.Nullable;
 @Component
 public class FirebaseConfig {
 	
+	GoogleCredentials credentials;
+	
+	public FirebaseConfig()throws IOException {
+		//秘密鍵はGOOGLE_APPLICATION_CREDENTIALS環境変数で指定
+		this.credentials = GoogleCredentials.getApplicationDefault();
+	}
+	
 	@Nullable
 	public String errorString = null;
-	
-	//秘密鍵はGOOGLE_APPLICATION_CREDENTIALS環境変数で指定
-	GoogleCredentials credentials = GoogleCredentials.getApplicationDefault();
 	
 	FirebaseOptions options = FirebaseOptions.builder()
 			.setCredentials(credentials)

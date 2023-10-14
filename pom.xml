@@ -79,17 +79,8 @@
 			<groupId>io.awspring.cloud</groupId>
 			<artifactId>spring-cloud-aws-jdbc</artifactId>
 			<version>${spring.cloud.aws.version}</version>
-			</dependency>
-		<dependency>
-			<groupId>org.webjars</groupId>
-			<artifactId>bootstrap</artifactId>
-			<version>5.2.3</version>
 		</dependency>
-		<dependency>
-			<groupId>org.webjars.npm</groupId>
-			<artifactId>bootstrap-icons</artifactId>
-			<version>1.10.3</version>
-		</dependency>
+		
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>webjars-locator-core</artifactId>

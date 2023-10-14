@@ -1,11 +1,12 @@
 package com.example.demo.controller;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.Class;
@@ -17,8 +18,8 @@ import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
 public class QuestionController {
-	private final ClassRepository classRepository;
-	private final QuestionRepository questionRepository;
+	private ClassRepository classRepository;
+	private QuestionRepository questionRepository;
 	
 	public QuestionController(ClassRepository classRepository, QuestionRepository questionRepository) {
 		this.classRepository = classRepository;
@@ -27,7 +28,7 @@ public class QuestionController {
 	
 	@Operation(summary = "Classを全件取得")
 	@GetMapping("/classes")
-	public List<Class> getClasses(){
+	public List<Class> getClasses() throws InterruptedException, ExecutionException{
 		return classRepository.findAll();
 	}
 	
@@ -49,7 +50,9 @@ public class QuestionController {
 		return questionRepository.findByIdInClass(classId, questionId).get();
 	}*/
 	
-	/**@Operation(summary = "特定の授業の大問のみまたは中問のみまたは小問のみを全件取得")
+	/**@throws ExecutionException 
+	 * @throws InterruptedException 
+	 * @Operation(summary = "特定の授業の大問のみまたは中問のみまたは小問のみを全件取得")
 	@GetMapping("/{classId}/{parentQuestionId}/questions")
 	public List<Question> getQuestions(@PathVariable Long classId, @PathVariable Long parentQuestionId){
 		return questionRepository.findAllQuestions(classId, parentQuestionId);
@@ -57,26 +60,32 @@ public class QuestionController {
 	
 	@Operation(summary = "特定のClassのPartを全件取得")
 	@GetMapping("/{classId}/Parts")
-	public List<Question> getParts(@PathVariable String classId){
+	public List<Question> getParts(@PathVariable String classId) throws InterruptedException, ExecutionException{
 		return questionRepository.findAllParts(classId);
 	}
 	
 	@Operation(summary = "特定のClassのfileのPartを全件取得")
 	@GetMapping("/{classId}/fileParts")
-	public List<Question> getFileParts(@PathVariable String classId){
+	public List<Question> getFileParts(@PathVariable String classId) throws InterruptedException, ExecutionException{
 		return questionRepository.findAllFileParts(classId);
 	}
 	
 	@Operation(summary = "特定のClassのfolderのPartを全件取得")
 	@GetMapping("/{classId}/folderParts")
-	public List<Question> getFolderParts(@PathVariable String classId){
+	public List<Question> getFolderParts(@PathVariable String classId) throws InterruptedException, ExecutionException{
 		return questionRepository.findAllFolderParts(classId);
 	}
 	
 	@Operation(summary = "特定のPartのQuestionを全件取得")
-	@GetMapping("/{partId}/folderParts")
-	public List<Question> getQuestionsInPart(@PathVariable String partId){
+	@GetMapping("/{classId}/{partId}/Questions")
+	public List<Question> getQuestionsInPart(@PathVariable String classId, @PathVariable String partId) throws InterruptedException, ExecutionException{
 		return questionRepository.findAllQuestionsInPart(partId);
+	}
+	
+	@Operation(summary = "特定のPartのQuestionを1件取得")
+	@GetMapping("/{classId}/{partId}/{questionId}")
+	public Question getQuestionInPart(@PathVariable String classId, @PathVariable String partId, @PathVariable String questionId) throws InterruptedException, ExecutionException{
+		return questionRepository.findQuestionInPart(questionId);
 	}
 	
 	/**@Operation(summary = "特定の授業の大問を全件取得")
@@ -97,12 +106,11 @@ public class QuestionController {
 		return questionRepository.findAllShomonInChumon(classId, chumonId);
 	}*/
 	
-	@Operation(summary = "特定の授業の問題を理解度を更新")
-	@PutMapping("/{classId}/{questionId}")
-	public Question saveComprehensionLevel(@PathVariable Long classId, @PathVariable Long questionId, @RequestBody Long comprehensionLevel){
-		Question question = questionRepository.findByIdInClass(classId, questionId).get();
-		question.setComprehensionLevel(comprehensionLevel);
-		return questionRepository.save(question);
+	@Operation(summary = "特定のPartのQuestionのdifficultyを代入した値に更新")
+	@PutMapping(path = "/{classId}/{partId}/{questionId}", params = "difficuty")
+	public void savedifficulty(@PathVariable String classId, @PathVariable String partId, @PathVariable String questionId, @RequestParam("difficulty") Long difficulty) throws ExecutionException, InterruptedException{
+		Question question = questionRepository.findQuestionInPart(questionId);
+		question.setDifficulty(difficulty);
 	}
 	
 }
