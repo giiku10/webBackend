@@ -6,7 +6,7 @@ import java.util.concurrent.ExecutionException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.example.demo.config.FirestoreConfig;
+import com.example.demo.config.FirebaseClass;
 import com.example.demo.model.Question;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.CollectionReference;
@@ -17,16 +17,16 @@ import com.google.cloud.firestore.QuerySnapshot;
 
 public class QuestionRepository {
 	
-	private FirestoreConfig firestoreConfig;
+	private FirebaseClass firestoreConfig;
 	
 	//コンストラクタインジェクション
 	@Autowired
-	public QuestionRepository(FirestoreConfig firestoreConfig){
+	public QuestionRepository(FirebaseClass firestoreConfig){
 		this.firestoreConfig = firestoreConfig;
 	}
 	
-	private final CollectionReference partsReference = firestoreConfig.database.collection("Parts");
-	private final CollectionReference questionsReference = firestoreConfig.database.collection("Question");
+	private final CollectionReference partsReference = firestoreConfig.db.collection("Parts");
+	private final CollectionReference questionsReference = firestoreConfig.db.collection("Question");
 	
 	public List<Question> findAllParts(String classId) throws InterruptedException, ExecutionException{
 		List<Question> questions = new ArrayList<Question>();

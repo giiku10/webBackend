@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.config.FirestoreConfig;
+import com.example.demo.config.FirebaseClass;
 import com.example.demo.model.Class;
 import com.example.demo.model.Question;
 import com.example.demo.repository.ClassRepository;
@@ -21,7 +21,7 @@ import lombok.AllArgsConstructor;
 @RestController
 @AllArgsConstructor
 public class QuestionController {
-	private FirestoreConfig firestoreConfig = new FirestoreConfig();
+	private FirebaseClass firestoreConfig = new FirebaseClass();
 	private ClassRepository classRepository = new ClassRepository(firestoreConfig);
 	private QuestionRepository questionRepository = new QuestionRepository(firestoreConfig);
 
