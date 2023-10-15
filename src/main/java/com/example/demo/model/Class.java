@@ -1,9 +1,8 @@
 package com.example.demo.model;
 
-import org.springframework.data.annotation.Id;
-
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
+import nonapi.io.github.classgraph.json.Id;
 
 @Data
 public class Class {

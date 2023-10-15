@@ -1,0 +1,9 @@
+# AWS
+cloud:
+  aws:
+    instance:
+      data:
+        enabled: false
+    credentials:
+      instanceProfile: false
+      profileName: default

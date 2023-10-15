@@ -3,12 +3,11 @@ package com.example.demo.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.data.annotation.Id;
-
 import com.example.demo.repository.QuestionRepository;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
+import nonapi.io.github.classgraph.json.Id;
 
 @Data
 public class Question {
