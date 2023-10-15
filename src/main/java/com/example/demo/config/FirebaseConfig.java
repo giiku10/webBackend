@@ -23,8 +23,8 @@ public class FirebaseConfig {
 	// public FirebaseAuth firebaseAuth;
 
 	// public FirebaseConfig() {
-	// 	// 秘密鍵はGOOGLE_APPLICATION_CREDENTIALS環境変数で指定
-	// 	try {
+	// // 秘密鍵はGOOGLE_APPLICATION_CREDENTIALS環境変数で指定
+	// try {
 	// 		var credentials = GoogleCredentials.getApplicationDefault();
 	// 		FirebaseOptions options = FirebaseOptions.builder()
 	// 				.setCredentials(credentials)
