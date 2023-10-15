@@ -14,25 +14,27 @@ import com.google.firebase.database.annotations.Nullable;
 //Initialize Firebase Admin SDK
 @Component
 public class FirebaseConfig {
-	
-	GoogleCredentials credentials;
-	
-	public FirebaseConfig()throws IOException {
-		//秘密鍵はGOOGLE_APPLICATION_CREDENTIALS環境変数で指定
-		this.credentials = GoogleCredentials.getApplicationDefault();
-	}
-	
-	@Nullable
-	public String errorString = null;
-	
-	FirebaseOptions options = FirebaseOptions.builder()
-			.setCredentials(credentials)
-			.setDatabaseUrl("https://kan-sou-ki-default-rtdb.asia-southeast1.firebasedatabase.app")
-			.build();
-	
-	FirebaseApp firebaseApp = FirebaseApp.initializeApp(options);
-	
-	public FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance(firebaseApp);
-	
-	public FirebaseAuth firebaseAuth = FirebaseAuth.getInstance(firebaseApp);
+
+	// GoogleCredentials credentials;
+
+	// @Nullable
+	// public String errorString = null;
+	// public FirebaseDatabase firebaseDatabase;
+	// public FirebaseAuth firebaseAuth;
+
+	// public FirebaseConfig() {
+	// 	// 秘密鍵はGOOGLE_APPLICATION_CREDENTIALS環境変数で指定
+	// 	try {
+	// 		var credentials = GoogleCredentials.getApplicationDefault();
+	// 		FirebaseOptions options = FirebaseOptions.builder()
+	// 				.setCredentials(credentials)
+	// 				.build();
+
+	// 		FirebaseApp firebaseApp = FirebaseApp.initializeApp(options);
+	// 		firebaseAuth = FirebaseAuth.getInstance(firebaseApp);
+	// 	} catch (IOException e) {
+	// 		errorString = e.getMessage();
+	// 	}
+	// }
+
 }

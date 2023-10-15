@@ -1,6 +1,6 @@
 package com.example.demo.model;
 
-import org.springframework.data.annotation.Id;
+// import org.springframework.data.annotation.Id;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -12,7 +12,7 @@ public class Class {
 	public Class() {
 	}
 	
-	@Id
+	// @Id
 	private String id;
 	
 	@NotBlank

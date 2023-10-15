@@ -69,7 +69,6 @@ public class QuestionRepository {
 			}
 			return questions;
 		} catch (InterruptedException | ExecutionException e) {
-			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 			return questions;
 		}

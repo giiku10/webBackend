@@ -6,24 +6,44 @@ import org.springframework.stereotype.Component;
 
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.firestore.Firestore;
-import com.google.cloud.firestore.FirestoreOptions;
+// import com.google.cloud.firestore.FirestoreOptions;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
+import com.google.firebase.cloud.FirestoreClient;
+import com.google.firebase.internal.Nullable;
 
 @Component
 public class FirestoreConfig {
-	
-	private final String projectId = "kansou-ki";
-	private GoogleCredentials credentials;
-	
-	public FirestoreConfig()throws IOException {
-		//秘密鍵はGOOGLE_APPLICATION_CREDENTIALS環境変数で指定
-		this.credentials = GoogleCredentials.getApplicationDefault();
+
+	// private GoogleCredentials credentials;
+
+	@Nullable
+	public Firestore database = null;
+
+	public FirestoreConfig() {
+		// 秘密鍵はGOOGLE_APPLICATION_CREDENTIALS環境変数で指定
+		try {
+			var credentials = GoogleCredentials.getApplicationDefault();
+			System.out.println(credentials);
+			FirebaseOptions options = FirebaseOptions.builder()
+					.setCredentials(credentials)
+					.build();
+
+			FirebaseApp app = FirebaseApp.initializeApp(options);
+			// FirestoreOptions firestoreOptions;
+			// firestoreOptions = FirestoreOptions.getDefaultInstance()
+			// .toBuilder()
+			// .setCredentials(credentials)
+			// .build();
+			try {
+				database = FirestoreClient.getFirestore(app);
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+		} catch (IOException e) {
+			// e.printStackTrace();
+			System.out.println(e);
+		}
 	}
-	
-	FirestoreOptions firestoreOptions = FirestoreOptions.getDefaultInstance()
-			.toBuilder()
-			.setProjectId(projectId)
-			.setCredentials(credentials)
-			.build();
-	
-	public Firestore database = firestoreOptions.getService();
+
 }
